@@ -9,6 +9,7 @@ import PapersSection from './components/PapersSection';
 import PortalsSection from './components/PortalsSection';
 import SponsorsSection from './components/SponsorsSection';
 import NewsletterModal from './components/NewsletterModal';
+import Chatbot from './components/Chatbot';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -164,6 +165,9 @@ export default function App() {
 
       {/* Global Newsletter Modal */}
       <NewsletterModal isOpen={isNewsletterOpen} onClose={closeNewsletterModal} />
+
+      {/* Global Floating Chatbot Assistant */}
+      <Chatbot />
 
       {/* Global Footer */}
       <Footer handleNavClick={handleNavClick} openNewsletterModal={openNewsletterModal} />
