@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ShieldCheck, Activity, Award, BookOpen, Compass, CheckCircle2 } from 'lucide-react';
+import { gsap } from 'gsap';
 
 export default function WelcomeSection({ handleNavClick }) {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.welcome-text-col > *', {
+        y: 25,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out'
+      });
+
+      gsap.from('.welcome-card-box', {
+        scale: 0.95,
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out'
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="section-padding welcome-section" id="welcome">
+    <section className="section-padding welcome-section" id="welcome" ref={sectionRef}>
       <div className="container">
         <div className="grid-2 welcome-grid">
           {/* Welcome Text Content */}

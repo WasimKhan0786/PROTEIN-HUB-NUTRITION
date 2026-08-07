@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, Phone, Mail, MapPin, ShieldCheck, Award, CheckCircle2 } from 'lucide-react';
+import { gsap } from 'gsap';
 
 export default function Hero({ handleNavClick, openNewsletterModal }) {
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+      tl.from('.hero-badge', { y: -20, opacity: 0, duration: 0.6 })
+        .from('.hero-headline', { y: 30, opacity: 0, duration: 0.8 }, '-=0.3')
+        .from('.hero-subtitle', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+        .from('.hero-cta-group > *', { y: 20, opacity: 0, duration: 0.5, stagger: 0.12 }, '-=0.3')
+        .from('.metric-card', { y: 30, opacity: 0, duration: 0.6, stagger: 0.15 }, '-=0.2');
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="hero-section">
+    <section className="hero-section" ref={heroRef}>
       <div className="hero-bg-overlay"></div>
       <div className="hero-bg-image" style={{ backgroundImage: `url('/assets/hero_physique.png')` }}></div>
       <div className="hero-gold-glow"></div>
