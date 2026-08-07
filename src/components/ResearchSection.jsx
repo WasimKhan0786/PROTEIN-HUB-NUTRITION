@@ -1,5 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { UserCheck, PieChart, FileSpreadsheet, ArrowUpRight, HelpCircle, AlertCircle } from 'lucide-react';
+
+function AnimatedCounter({ endValue, suffix = '', decimals = 0, duration = 2000 }) {
+  const [count, setCount] = useState(0);
+  const counterRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let startTime = null;
+
+          const animate = (timestamp) => {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            setCount(easeProgress * endValue);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [endValue, duration, hasAnimated]);
+
+  return (
+    <span ref={counterRef} className="stat-value">
+      {count.toFixed(decimals)}{suffix}
+    </span>
+  );
+}
 
 export default function ResearchSection({ handleNavClick }) {
   const activeCalls = [
@@ -87,25 +130,25 @@ export default function ResearchSection({ handleNavClick }) {
 
           <div className="grid-4 uk-stats-grid">
             <div className="stat-box">
-              <span className="stat-value">56%</span>
+              <AnimatedCounter endValue={56} suffix="%" decimals={0} />
               <span className="stat-label">NSP Client Majority</span>
               <p className="stat-detail">IPED users now constitute over half of all service attendees at needle exchanges in England and Wales.</p>
             </div>
 
             <div className="stat-box">
-              <span className="stat-value">4.2 YRS</span>
+              <AnimatedCounter endValue={4.2} suffix=" YRS" decimals={1} />
               <span className="stat-label">Average Use Duration</span>
               <p className="stat-detail">Mean continuous or cyclic administration period reported among regular UK strength athletes.</p>
             </div>
 
             <div className="stat-box">
-              <span className="stat-value">78%</span>
+              <AnimatedCounter endValue={78} suffix="%" decimals={0} />
               <span className="stat-label">Poly-Substance Use</span>
               <p className="stat-detail">Concomitant use of AAS alongside growth hormone, insulin, SARMs, or fat burners.</p>
             </div>
 
             <div className="stat-box">
-              <span className="stat-value">31%</span>
+              <AnimatedCounter endValue={31} suffix="%" decimals={0} />
               <span className="stat-label">SARM & Peptide Growth</span>
               <p className="stat-detail">Rapid growth in non-injectable selective androgen receptor modulator use among younger demographics (18-24).</p>
             </div>
