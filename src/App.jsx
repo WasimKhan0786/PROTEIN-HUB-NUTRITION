@@ -10,6 +10,7 @@ import PortalsSection from './components/PortalsSection';
 import SponsorsSection from './components/SponsorsSection';
 import NewsletterModal from './components/NewsletterModal';
 import Chatbot from './components/Chatbot';
+import ScrollToTop from './components/ScrollToTop';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -168,6 +169,9 @@ export default function App() {
 
       {/* Global Floating Chatbot Assistant */}
       <Chatbot />
+
+      {/* Global Scroll To Top Floating Arrow */}
+      <ScrollToTop />
 
       {/* Global Footer */}
       <Footer handleNavClick={handleNavClick} openNewsletterModal={openNewsletterModal} />

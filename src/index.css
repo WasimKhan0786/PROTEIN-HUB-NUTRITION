@@ -2313,4 +2313,47 @@ button {
   }
 }
 
+/* Scroll to Top Floating Button */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9990;
+  width: 48px;
+  height: 48px;
+  background: rgba(15, 18, 23, 0.9);
+  border: 1px solid var(--gold-primary);
+  color: var(--gold-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInBtn 0.3s ease;
+}
+
+.scroll-to-top-btn:hover {
+  background: var(--gold-primary);
+  color: #050608;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+}
+
+@keyframes fadeInBtn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .scroll-to-top-btn {
+    bottom: 20px;
+    left: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
 
