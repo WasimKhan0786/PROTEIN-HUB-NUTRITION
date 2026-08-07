@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UserCheck, PieChart, FileSpreadsheet, ArrowUpRight, HelpCircle, AlertCircle } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function AnimatedCounter({ endValue, suffix = '', decimals = 0, duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -45,6 +49,42 @@ function AnimatedCounter({ endValue, suffix = '', decimals = 0, duration = 2000 
 }
 
 export default function ResearchSection({ handleNavClick }) {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Calls for participants header
+      gsap.from('.research-section .section-subtitle', {
+        scrollTrigger: { trigger: '#calls-for-participants', start: 'top 82%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('#calls-for-participants .section-title', {
+        scrollTrigger: { trigger: '#calls-for-participants', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      // Call cards stagger
+      gsap.from('.call-card', {
+        scrollTrigger: { trigger: '.research-calls-grid', start: 'top 85%', once: true },
+        y: 60, opacity: 0, duration: 0.7, stagger: 0.18, ease: 'power3.out'
+      });
+      // Stats section header
+      gsap.from('#iped-uk-stats .section-subtitle', {
+        scrollTrigger: { trigger: '#iped-uk-stats', start: 'top 82%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('#iped-uk-stats .section-title', {
+        scrollTrigger: { trigger: '#iped-uk-stats', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      // Stat boxes bounce in
+      gsap.from('.stat-box', {
+        scrollTrigger: { trigger: '.uk-stats-grid', start: 'top 85%', once: true },
+        scale: 0.8, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'back.out(1.7)'
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   const activeCalls = [
     {
       id: 'call-1',
@@ -79,7 +119,7 @@ export default function ResearchSection({ handleNavClick }) {
   ];
 
   return (
-    <section className="section-padding research-section" id="research-section">
+    <section className="section-padding research-section" id="research-section" ref={sectionRef}>
       <div className="container">
         {/* Calls for Participants Sub-Section */}
         <div className="research-block" id="calls-for-participants">

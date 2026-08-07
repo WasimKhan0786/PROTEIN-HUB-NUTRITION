@@ -1,9 +1,71 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ShieldCheck, Activity, BookOpen, Globe, HeartPulse, Building2, Download, ArrowRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function PortalsSection({ activePage, handleNavClick, openNewsletterModal }) {
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // About section
+      gsap.from('#about .section-subtitle', {
+        scrollTrigger: { trigger: '#about', start: 'top 82%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('#about .section-title', {
+        scrollTrigger: { trigger: '#about', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      gsap.from('#about .lead-paragraph', {
+        scrollTrigger: { trigger: '#about', start: 'top 80%', once: true },
+        y: 30, opacity: 0, duration: 0.6, delay: 0.25, ease: 'power3.out'
+      });
+      gsap.from('.stat-item', {
+        scrollTrigger: { trigger: '.about-stats-row', start: 'top 88%', once: true },
+        y: 30, opacity: 0, scale: 0.85, duration: 0.5, stagger: 0.12, ease: 'back.out(1.7)'
+      });
+      gsap.from('.about-image-card', {
+        scrollTrigger: { trigger: '.about-grid', start: 'top 82%', once: true },
+        x: 60, opacity: 0, duration: 0.8, ease: 'power3.out'
+      });
+
+      // Academics & Practitioners
+      gsap.from('#academics .section-title', {
+        scrollTrigger: { trigger: '#academics', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out'
+      });
+      gsap.from('.portal-card', {
+        scrollTrigger: { trigger: '.portals-grid', start: 'top 85%', once: true },
+        y: 60, opacity: 0, duration: 0.75, stagger: 0.2, ease: 'power3.out'
+      });
+
+      // Resources
+      gsap.from('#resources .section-title', {
+        scrollTrigger: { trigger: '#resources', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out'
+      });
+      gsap.from('.res-card', {
+        scrollTrigger: { trigger: '.resources-grid', start: 'top 85%', once: true },
+        y: 50, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'power3.out'
+      });
+
+      // International partners
+      gsap.from('#partners .section-title', {
+        scrollTrigger: { trigger: '#partners', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, ease: 'power3.out'
+      });
+      gsap.from('.partner-item-card', {
+        scrollTrigger: { trigger: '.partner-cards-grid', start: 'top 85%', once: true },
+        scale: 0.8, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.4)'
+      });
+    }, wrapperRef);
+    return () => ctx.revert();
+  }, []);
   return (
-    <div className="portals-wrapper">
+    <div className="portals-wrapper" ref={wrapperRef}>
       {/* ABOUT ASUK BLOCK */}
       <section className="section-padding about-block" id="about">
         <div className="container">

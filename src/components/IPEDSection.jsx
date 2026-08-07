@@ -1,8 +1,58 @@
-import React, { useState } from 'react';
-import { Pill, Activity, ShieldAlert, HeartPulse, Sparkles, ChevronRight, Info } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Pill, ShieldAlert, HeartPulse, ChevronRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function IPEDSection({ handleNavClick }) {
   const [selectedCategory, setSelectedCategory] = useState('aas');
+  const sectionRef = useRef(null);
+  const detailRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.iped-section .section-subtitle', {
+        scrollTrigger: { trigger: '.iped-section', start: 'top 80%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('.iped-section .section-title', {
+        scrollTrigger: { trigger: '.iped-section', start: 'top 80%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      gsap.from('.iped-section .section-desc', {
+        scrollTrigger: { trigger: '.iped-section', start: 'top 80%', once: true },
+        y: 30, opacity: 0, duration: 0.6, delay: 0.28, ease: 'power3.out'
+      });
+      gsap.from('.iped-banner-img-col', {
+        scrollTrigger: { trigger: '.iped-banner-card', start: 'top 85%', once: true },
+        x: -70, opacity: 0, duration: 0.9, ease: 'power3.out'
+      });
+      gsap.from('.iped-banner-info-col', {
+        scrollTrigger: { trigger: '.iped-banner-card', start: 'top 85%', once: true },
+        x: 70, opacity: 0, duration: 0.9, ease: 'power3.out'
+      });
+      gsap.from('.iped-select-btn', {
+        scrollTrigger: { trigger: '.iped-selector-btns', start: 'top 92%', once: true },
+        y: 20, opacity: 0, duration: 0.4, stagger: 0.1, ease: 'back.out(1.4)'
+      });
+      gsap.from('.iped-detail-card', {
+        scrollTrigger: { trigger: '.iped-detail-card', start: 'top 88%', once: true },
+        y: 50, opacity: 0, duration: 0.8, ease: 'power3.out'
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  const handleCategoryChange = (cat) => {
+    if (detailRef.current) {
+      gsap.fromTo(detailRef.current,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.38, ease: 'power2.out' }
+      );
+    }
+    setSelectedCategory(cat);
+  };
 
   const ipedCategories = {
     aas: {
@@ -42,7 +92,7 @@ export default function IPEDSection({ handleNavClick }) {
   const current = ipedCategories[selectedCategory];
 
   return (
-    <section className="section-padding iped-section" id="iped-section">
+    <section className="section-padding iped-section" id="iped-section" ref={sectionRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">IMAGE & PERFORMANCE ENHANCING DRUGS</span>
@@ -67,36 +117,36 @@ export default function IPEDSection({ handleNavClick }) {
             </p>
 
             <div className="iped-selector-btns">
-              <button 
+              <button
                 className={`iped-select-btn ${selectedCategory === 'aas' ? 'active' : ''}`}
-                onClick={() => setSelectedCategory('aas')}
+                onClick={() => handleCategoryChange('aas')}
               >
                 ANABOLIC STEROIDS (AAS)
               </button>
-              <button 
+              <button
                 className={`iped-select-btn ${selectedCategory === 'hgh' ? 'active' : ''}`}
-                onClick={() => setSelectedCategory('hgh')}
+                onClick={() => handleCategoryChange('hgh')}
               >
-                GROWTH HORMONE & PEPTIDES
+                GROWTH HORMONE &amp; PEPTIDES
               </button>
-              <button 
+              <button
                 className={`iped-select-btn ${selectedCategory === 'fatburners' ? 'active' : ''}`}
-                onClick={() => setSelectedCategory('fatburners')}
+                onClick={() => handleCategoryChange('fatburners')}
               >
-                METABOLIC & FAT LOSS
+                METABOLIC &amp; FAT LOSS
               </button>
-              <button 
+              <button
                 className={`iped-select-btn ${selectedCategory === 'pct' ? 'active' : ''}`}
-                onClick={() => setSelectedCategory('pct')}
+                onClick={() => handleCategoryChange('pct')}
               >
-                PCT & ANCILLARIES
+                PCT &amp; ANCILLARIES
               </button>
             </div>
           </div>
         </div>
 
         {/* Selected Compound Category Detail Display */}
-        <div className="iped-detail-card">
+        <div className="iped-detail-card" ref={detailRef}>
           <div className="iped-detail-header">
             <div>
               <span className="badge-gold">{current.badge}</span>

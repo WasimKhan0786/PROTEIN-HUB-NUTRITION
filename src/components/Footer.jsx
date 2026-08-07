@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ShieldCheck, Mail, MapPin, Phone, CheckCircle2 } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer({ handleNavClick, openNewsletterModal }) {
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.footer-col', {
+        scrollTrigger: { trigger: '.footer-section', start: 'top 90%', once: true },
+        y: 40, opacity: 0, duration: 0.65, stagger: 0.15, ease: 'power3.out'
+      });
+      gsap.from('.footer-bottom', {
+        scrollTrigger: { trigger: '.footer-section', start: 'top 85%', once: true },
+        y: 20, opacity: 0, duration: 0.5, delay: 0.6, ease: 'power2.out'
+      });
+    }, footerRef);
+    return () => ctx.revert();
+  }, []);
   return (
-    <footer className="footer-section">
+    <footer className="footer-section" ref={footerRef}>
       <div className="container">
         <div className="grid-4 footer-grid">
           {/* Col 1: Protein Hub Brand */}

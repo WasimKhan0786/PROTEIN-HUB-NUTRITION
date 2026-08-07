@@ -1,10 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FileText, Search, Download, Copy, Check, ExternalLink, Filter, BookOpen } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function PapersSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [copiedId, setCopiedId] = useState(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.papers-section .section-subtitle', {
+        scrollTrigger: { trigger: '.papers-section', start: 'top 82%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('.papers-section .section-title', {
+        scrollTrigger: { trigger: '.papers-section', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      gsap.from('.papers-filter-bar', {
+        scrollTrigger: { trigger: '.papers-filter-bar', start: 'top 88%', once: true },
+        y: 25, opacity: 0, duration: 0.55, ease: 'power2.out'
+      });
+      gsap.from('.paper-card', {
+        scrollTrigger: { trigger: '.papers-list', start: 'top 85%', once: true },
+        y: 45, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out'
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const papers = [
     {
@@ -79,7 +106,7 @@ export default function PapersSection() {
   });
 
   return (
-    <section className="section-padding papers-section" id="papers">
+    <section className="section-padding papers-section" id="papers" ref={sectionRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">PEER-REVIEWED LITERATURE & GUIDANCE</span>

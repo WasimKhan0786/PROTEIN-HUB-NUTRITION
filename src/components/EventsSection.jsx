@@ -1,8 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Play, Download, MapPin, Clock, Users, X, Award, ExternalLink } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function EventsSection() {
   const [selectedPresentation, setSelectedPresentation] = useState(null);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Upcoming events header
+      gsap.from('.events-section .section-subtitle', {
+        scrollTrigger: { trigger: '#forthcoming-events', start: 'top 82%', once: true },
+        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
+      });
+      gsap.from('#forthcoming-events .section-title', {
+        scrollTrigger: { trigger: '#forthcoming-events', start: 'top 82%', once: true },
+        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
+      });
+      // Event cards slide in from alternating sides
+      gsap.from('.event-card', {
+        scrollTrigger: { trigger: '.upcoming-events-grid', start: 'top 85%', once: true },
+        y: 60, opacity: 0, duration: 0.75, stagger: 0.2, ease: 'power3.out'
+      });
+      // Conference banner
+      gsap.from('.conf-banner-content', {
+        scrollTrigger: { trigger: '.conf-banner', start: 'top 85%', once: true },
+        x: -70, opacity: 0, duration: 0.9, ease: 'power3.out'
+      });
+      gsap.from('.conf-banner-img', {
+        scrollTrigger: { trigger: '.conf-banner', start: 'top 85%', once: true },
+        x: 70, opacity: 0, duration: 0.9, ease: 'power3.out'
+      });
+      // Presentation cards stagger
+      gsap.from('.presentation-card', {
+        scrollTrigger: { trigger: '.conference-grid', start: 'top 85%', once: true },
+        y: 50, opacity: 0, duration: 0.65, stagger: 0.15, ease: 'power3.out'
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
 
   const conference2020Presentations = [
     {
@@ -67,7 +106,7 @@ export default function EventsSection() {
   ];
 
   return (
-    <section className="section-padding events-section" id="events-section">
+    <section className="section-padding events-section" id="events-section" ref={sectionRef}>
       <div className="container">
         {/* Forthcoming Events Sub-Section */}
         <div className="events-block" id="forthcoming-events">
