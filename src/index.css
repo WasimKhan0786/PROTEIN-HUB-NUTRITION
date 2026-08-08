@@ -54,27 +54,40 @@ body {
    Prevents accidental text highlighting on touch devices.
    Inputs / textareas keep selection enabled.
 ═══════════════════════════════════════════ */
-@media (max-width: 768px) {
-  * {
-    -webkit-user-select: none; /* Safari / Chrome iOS & Android */
-    -moz-user-select: none;    /* Firefox mobile              */
-    -ms-user-select: none;     /* Edge mobile                 */
-    user-select: none;         /* Standard                    */
-    -webkit-tap-highlight-color: transparent; /* Remove tap flash on iOS */
-    -webkit-touch-callout: none;              /* Disable callout on long-press (iOS) */
-  }
+/* ═══════════════════════════════════════════
+   DISABLE TEXT SELECTION FOR INTERACTIVE UI & UTILITY CLASS
+   Prevents accidental text highlighting on buttons, badges, navigation & icons while preserving normal copy/select for page content.
+═══════════════════════════════════════════ */
+button,
+a,
+.btn-primary,
+.btn-outline,
+.logo-brand,
+.nav-links,
+.mobile-nav-item,
+.mobile-toggle-btn,
+.badge-gold,
+.top-badge,
+.card-badge,
+.scroll-to-top-btn,
+.chatbot-toggle-btn,
+.no-select {
+  -webkit-user-select: none; /* Safari, Chrome iOS & Android */
+  -moz-user-select: none;    /* Firefox                       */
+  -ms-user-select: none;     /* Edge/IE                       */
+  user-select: none;         /* Standard                      */
+  -webkit-tap-highlight-color: transparent; /* Remove blue flash on mobile tap */
+}
 
-  /* Re-enable selection inside form fields */
-  input,
-  textarea,
-  select,
-  [contenteditable="true"] {
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
-    -webkit-touch-callout: default;
-  }
+/* Form inputs explicitly allow selection */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 
