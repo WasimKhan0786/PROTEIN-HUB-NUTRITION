@@ -120,7 +120,7 @@ export default function App() {
                 <p>UK universities, NHS trusts, and research foundations backing ASUK.</p>
               </div>
             </div>
-            <SponsorsSection openNewsletterModal={openNewsletterModal} />
+            <SponsorsSection hideHeader={true} openNewsletterModal={openNewsletterModal} />
           </div>
         )}
 

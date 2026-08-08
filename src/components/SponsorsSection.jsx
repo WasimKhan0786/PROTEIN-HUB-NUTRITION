@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SponsorsSection({ openNewsletterModal }) {
+export default function SponsorsSection({ openNewsletterModal, hideHeader = false }) {
   const sectionRef = useRef(null);
 
   const sponsors = [
@@ -37,34 +37,26 @@ export default function SponsorsSection({ openNewsletterModal }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header
-      gsap.from('.sponsors-section .section-subtitle', {
-        scrollTrigger: { trigger: '.sponsors-section', start: 'top 80%', once: true },
-        y: 30, opacity: 0, duration: 0.6, ease: 'power3.out'
-      });
-      gsap.from('.sponsors-section .section-title', {
-        scrollTrigger: { trigger: '.sponsors-section', start: 'top 80%', once: true },
-        y: 40, opacity: 0, duration: 0.7, delay: 0.15, ease: 'power3.out'
-      });
-      gsap.from('.sponsors-section .section-desc', {
-        scrollTrigger: { trigger: '.sponsors-section', start: 'top 80%', once: true },
-        y: 30, opacity: 0, duration: 0.6, delay: 0.28, ease: 'power3.out'
-      });
-
-      // Sponsor cards stagger
       gsap.from('.sponsor-card', {
-        scrollTrigger: { trigger: '.sponsors-grid', start: 'top 85%', once: true },
-        y: 60, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out'
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: 'power2.out',
+        clearProps: 'all'
       });
-
-      // CTA banner
       gsap.from('.sponsor-cta-banner', {
-        scrollTrigger: { trigger: '.sponsor-cta-banner', start: 'top 88%', once: true },
-        scale: 0.92, opacity: 0, duration: 0.8, ease: 'back.out(1.4)'
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.2,
+        ease: 'power2.out',
+        clearProps: 'all'
       });
     }, sectionRef);
+
     return () => ctx.revert();
-  }, []);
+  }, [hideHeader]);
 
   const handleContactClick = () => {
     if (openNewsletterModal) {
@@ -77,13 +69,15 @@ export default function SponsorsSection({ openNewsletterModal }) {
   return (
     <section className="section-padding sponsors-section" id="sponsors" ref={sectionRef}>
       <div className="container">
-        <div className="section-header">
-          <span className="section-subtitle">INSTITUTIONAL BACKING</span>
-          <h2 className="section-title">SPONSORS AND SUPPORTERS</h2>
-          <p className="section-desc">
-            ASUK is supported by leading UK universities, public health agencies, and international research trusts committed to independent harm reduction science.
-          </p>
-        </div>
+        {!hideHeader && (
+          <div className="section-header">
+            <span className="section-subtitle">INSTITUTIONAL BACKING</span>
+            <h2 className="section-title">SPONSORS AND SUPPORTERS</h2>
+            <p className="section-desc">
+              ASUK is supported by leading UK universities, public health agencies, and international research trusts committed to independent harm reduction science.
+            </p>
+          </div>
+        )}
 
         <div className="grid-2 sponsors-grid">
           {sponsors.map((s, index) => {

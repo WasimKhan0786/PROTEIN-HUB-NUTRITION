@@ -1633,16 +1633,29 @@ button {
 }
 
 /* Sponsors Section */
+.sponsors-section {
+  padding: 3rem 0;
+}
+
+.sponsors-section .section-header {
+  margin-bottom: 1.75rem;
+}
+
+.sponsors-grid {
+  gap: 1.5rem;
+}
+
 .sponsor-card {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
   align-items: flex-start;
 }
 
 .sponsor-icon-wrapper {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--gold-border);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -1651,14 +1664,16 @@ button {
 }
 
 .sponsor-name {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   margin: 0.3rem 0;
+  color: var(--text-white);
 }
 
 .sponsor-desc {
   font-size: 0.88rem;
   color: var(--text-muted);
   margin-bottom: 0.75rem;
+  line-height: 1.5;
 }
 
 .sponsor-verified {
@@ -1674,9 +1689,9 @@ button {
   background: linear-gradient(135deg, #11131b 0%, #191c29 100%);
   border: 1px solid var(--gold-border);
   border-radius: 8px;
-  padding: 2.5rem;
+  padding: 2.25rem 2rem;
   text-align: center;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 }
 
 .sponsor-cta-banner h3 {
